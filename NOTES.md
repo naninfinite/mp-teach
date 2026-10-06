@@ -9,3 +9,9 @@
 
 ## Later (after this course)
 - **TODO: Fragment shaders (relearn).** Learner wants to come back to these. Natural follow-on: the image-grid and rotation-matrix milestones lead straight into it — a fragment shader is a function run once per pixel, and shaders use `mat2`/`mat3`/`mat4` to rotate, scale and move coordinates. Start from The Book of Shaders, ch. 8 "2D Matrices" (https://thebookofshaders.com/08/). Treat as a new mission when we get there: confirm it with the learner first.
+
+## Repo
+- GitHub: git@github.com:naninfinite/mp-teach.git (public). Pages site: https://naninfinite.github.io/mp-teach/
+- `main` = course + finished games. Each game is built on its own `game/<name>` branch in `games/<name>/`, merged to `main` when done.
+- Learner's lesson answers go in `answers/` (via the "Download my answers" button).
+- `gh` CLI is not logged in on the Pi; pushing works over SSH.
