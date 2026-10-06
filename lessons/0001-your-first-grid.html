@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your First Grid</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/theme.js"></script>
+<script src="../assets/grid-view.js"></script>
+<script src="../assets/quiz.js"></script>
+<script src="../assets/code-exercise.js"></script>
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 1 · Tic-tac-toe · ~20 min</p>
+<h1>Your first grid</h1>
+<p class="subtitle">A tic-tac-toe board is an array of arrays. Learn to read it, walk it, and spot a winning row.</p>
+
+<div class="goal"><p><strong>Today's win:</strong> you'll write <code>rowWins(board, row)</code>, the first real piece of a tic-tac-toe game. It checks whether a row holds three of the same mark.</p></div>
+
+<h2>1. A grid is an array of arrays</h2>
+
+<p>You remembered matrices as "arrays inside arrays", and that's exactly right. In JavaScript, a grid is an outer array whose items are the <em>rows</em>, and each row is an array of <em>cells</em> (<a href="https://javascript.info/array#multidimensional-arrays">javascript.info</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#creating_a_two-dimensional_array">MDN</a>):</p>
+
+<pre><code>const board = [
+  ["X", "O", "" ],   <span class="cmt">// row 0</span>
+  ["",  "X", "" ],   <span class="cmt">// row 1</span>
+  ["O", "",  "X"],   <span class="cmt">// row 2</span>
+];</code></pre>
+
+<p>Reading a cell takes two steps. <code>board[2]</code> gives you the whole bottom row, <code>["O", "", "X"]</code>. Then <code>[0]</code> picks the first cell of that row:</p>
+
+<pre><code>board[2]      <span class="cmt">// ["O", "", "X"]   a whole row</span>
+board[2][0]   <span class="cmt">// "O"              row 2, then column 0</span></code></pre>
+
+<p><strong>Row first, then column</strong>, every time. Picture "down, then across". Counting starts at 0, so a 3×3 board has rows and columns 0, 1 and 2.</p>
+
+<div class="aside"><b>Coming from C#:</b> C# has two kinds of 2D array, rectangular <code>string[,]</code> (read with <code>board[2, 0]</code>) and jagged <code>string[][]</code> (read with <code>board[2][0]</code>) (<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/arrays#jagged-arrays">Microsoft Learn</a>). JavaScript only has the jagged kind. There are no types to declare, and <code>const</code> only stops you pointing <code>board</code> at a different array. You can still change the cells inside it (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">MDN</a>).</div>
+
+<div class="panel" id="drill">
+  <p class="panel-title">Practice · find the cell</p>
+</div>
+<script>
+  GridDrill.mount(document.getElementById("drill").appendChild(document.createElement("div")), [
+    ["X", "O", ""],
+    ["", "X", ""],
+    ["O", "", "X"],
+  ]);
+</script>
+
+<h2>2. How big is it?</h2>
+
+<p>An array's <code>.length</code> tells you how many items it has. The outer array's items are rows, and each row's items are cells:</p>
+
+<pre><code>board.length      <span class="cmt">// 3  → number of rows</span>
+board[0].length   <span class="cmt">// 3  → number of columns (cells in row 0)</span></code></pre>
+
+<div class="aside"><b>Coming from C#:</b> it's <code>.length</code> in lowercase, where C# uses <code>.Length</code>. There's no <code>GetLength(1)</code> either. You ask a row how long it is.</div>
+
+<h2>3. Visiting every cell</h2>
+
+<p>To look at every cell, loop over the rows, and inside that, loop over the columns of the current row. It's the same nested loop you wrote in C#, with <code>let</code> in place of <code>int</code>:</p>
+
+<pre><code>for (let row = 0; row &lt; board.length; row++) {
+  for (let col = 0; col &lt; board[row].length; col++) {
+    console.log(row, col, board[row][col]);
+  }
+}
+<span class="cmt">// 0 0 X
+// 0 1 O
+// 0 2
+// 1 0          …and so on, row by row</span></code></pre>
+
+<p>To compare a cell with something, use <code>===</code> (three equals signs). It's JavaScript's strict equality, and it behaves like C#'s <code>==</code> for strings (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality">MDN</a>). Plain <code>==</code> also exists in JavaScript, but it quietly converts types first, so avoid it.</p>
+
+<div class="panel" id="ex-count">
+  <p class="panel-title">Exercise 1 · count the marks</p>
+  <p>Write <code>countMarks(board, mark)</code>, which returns how many cells equal <code>mark</code>. On the board above, <code>countMarks(board, "X")</code> is <code>3</code>. <span class="cmt">Tip: Ctrl+Enter runs the tests.</span></p>
+</div>
+
+<h2>4. A winning row</h2>
+
+<p>A row is a win when all three of its cells hold the <em>same</em> mark. There's a trap: <code>["", "", ""]</code> is also "three of the same", but nobody has won. An empty row must never count.</p>
+
+<p>Inside a function that's given <code>row</code>, the cells you care about are <code>board[row][0]</code>, <code>board[row][1]</code> and <code>board[row][2]</code>. The row index stays fixed and the column index moves.</p>
+
+<div class="panel" id="ex-row">
+  <p class="panel-title">Exercise 2 · today's win</p>
+  <p>Write <code>rowWins(board, row)</code>. It returns <code>true</code> if every cell in that row is the same mark and isn't empty, and <code>false</code> otherwise.</p>
+</div>
+
+<div class="panel" id="ex-col">
+  <p class="panel-title">Exercise 3 · stretch: flip it</p>
+  <p>Now write <code>colWins(board, col)</code> for a vertical win. Before you type, ask yourself which index stays fixed this time and which one moves.</p>
+</div>
+
+<h2>5. Check yourself</h2>
+<p>Answer these from memory, without scrolling up. Retrieving it is what makes it stick.</p>
+
+<div class="panel quiz">
+  <p>In <code>board[2][0]</code>, which number picks the row?</p>
+  <ol><li data-correct>The 2</li><li>The 0</li></ol>
+  <p class="explain">Row first, then column. <code>board[2]</code> is the whole row, and <code>[0]</code> then picks a cell from it.</p>
+</div>
+
+<div class="panel quiz">
+  <p>A Connect Four board has 6 rows and 7 columns. What is <code>board.length</code>?</p>
+  <ol><li>7</li><li>1</li><li data-correct>6</li><li>3</li></ol>
+  <p class="explain">The outer array holds the rows, so its length is the number of rows. The columns are <code>board[0].length</code>.</p>
+</div>
+
+<div class="panel quiz">
+  <p>Which is the bottom-right cell of a 3×3 board?</p>
+  <ol><li><code>board[3][3]</code></li><li><code>board[2][0]</code></li><li><code>board[0][2]</code></li><li data-correct><code>board[2][2]</code></li></ol>
+  <p class="explain">Counting starts at 0, so the last row and the last column are both index 2. <code>board[3]</code> doesn't exist and gives <code>undefined</code>.</p>
+</div>
+
+<div class="panel quiz">
+  <p>What does <code>board[1]</code> on its own give you?</p>
+  <ol><li>every cell in col 1</li><li data-correct>every cell in row 1</li></ol>
+  <p class="explain">One index picks one item from the outer array, and those items are whole rows. A column has no array of its own, so you collect it with a loop like the one in <code>colWins</code>.</p>
+</div>
+
+<h2>Read next</h2>
+<div class="source">
+  <p class="label">Primary source · 5 min</p>
+  <p><a href="https://javascript.info/array">javascript.info: Arrays</a>. Read from the top through "Multidimensional arrays". It's the clearest short explanation of JS arrays, and it covers the <code>for..of</code> loop, which we'll use when we don't need positions.</p>
+</div>
+
+<p>Keep the <a href="../reference/grids.html">grid cheat sheet</a> handy. It has everything from today on one page.</p>
+
+<p class="ask">If anything didn't click, ask me, your teacher, in the terminal. A question like "why does <code>board[3][0]</code> crash?" makes a good next step. When you finish, tell me how it went and which exercises you got through, so I can pitch the next lesson right.</p>
+
+<p id="save-answers" class="btn-row"></p>
+
+<nav class="course">
+  <span>← <a href="../index.html">Course home</a></span>
+  <span>Next: diagonals and a full winner check →</span>
+</nav>
+
+</main>
+
+<script>
+  const sample = [
+    ["X", "O", ""],
+    ["", "X", ""],
+    ["O", "", "X"],
+  ];
+  const E = ["", "", ""];
+
+  CodeExercise.mount("#ex-count", {
+    fn: "countMarks",
+    starter: `function countMarks(board, mark) {
+  let count = 0;
+  // loop over every row, then every column…
+
+  return count;
+}`,
+    tests: [
+      { label: 'sample board, "X" → 3', args: [sample, "X"], expect: 3 },
+      { label: 'sample board, "O" → 2', args: [sample, "O"], expect: 2 },
+      { label: 'sample board, "" (empty cells) → 4', args: [sample, ""], expect: 4 },
+      { label: 'empty board, "X" → 0', args: [[E, E, E], "X"], expect: 0 },
+      { label: "works on a 2×4 grid too", args: [[["X", "X", "", "X"], ["", "X", "O", "O"]], "X"], expect: 4 },
+    ],
+    hint: "Use the nested loop from section 3. Inside it, <code>if (board[row][col] === mark) count++;</code>",
+    solution: `function countMarks(board, mark) {
+  let count = 0;
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col] === mark) count++;
+    }
+  }
+  return count;
+}`,
+  });
+
+  const rowBoard = [
+    ["X", "X", "X"],
+    ["O", "O", ""],
+    ["", "", ""],
+  ];
+  const rowBoard2 = [
+    ["O", "X", "O"],
+    ["X", "X", "O"],
+    ["O", "O", "O"],
+  ];
+  CodeExercise.mount("#ex-row", {
+    fn: "rowWins",
+    starter: `function rowWins(board, row) {
+  // board[row][0], board[row][1], board[row][2]…
+
+}`,
+    tests: [
+      { label: "X X X in row 0 → true", args: [rowBoard, 0], expect: true },
+      { label: 'O O "" in row 1 → false', args: [rowBoard, 1], expect: false },
+      { label: "empty row 2 → false (nobody won!)", args: [rowBoard, 2], expect: false },
+      { label: "O O O in row 2 → true", args: [rowBoard2, 2], expect: true },
+      { label: "O X O in row 0 → false", args: [rowBoard2, 0], expect: false },
+    ],
+    hint: "Save the first cell: <code>const first = board[row][0];</code> If it's <code>\"\"</code>, return <code>false</code> straight away. Otherwise check that the other two cells <code>=== first</code>.",
+    solution: `function rowWins(board, row) {
+  const first = board[row][0];
+  if (first === "") return false;
+  return board[row][1] === first && board[row][2] === first;
+}`,
+  });
+
+  const colBoard = [
+    ["X", "O", ""],
+    ["X", "O", ""],
+    ["X", "", "O"],
+  ];
+  CodeExercise.mount("#ex-col", {
+    fn: "colWins",
+    starter: `function colWins(board, col) {
+
+}`,
+    tests: [
+      { label: "X X X down column 0 → true", args: [colBoard, 0], expect: true },
+      { label: 'O O "" down column 1 → false', args: [colBoard, 1], expect: false },
+      { label: '"" "" O down column 2 → false', args: [colBoard, 2], expect: false },
+      { label: "empty column → false", args: [[E, E, E], 1], expect: false },
+    ],
+    hint: "Now the <em>column</em> index stays fixed and the row moves: <code>board[0][col]</code>, <code>board[1][col]</code>, <code>board[2][col]</code>.",
+    solution: `function colWins(board, col) {
+  const first = board[0][col];
+  if (first === "") return false;
+  return board[1][col] === first && board[2][col] === first;
+}`,
+  });
+
+  CodeExercise.downloadButton("#save-answers");
+</script>
+</body>
+</html>

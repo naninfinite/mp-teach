@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grid Cheat Sheet</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/theme.js"></script>
+</head>
+<body class="reference">
+<main>
+
+<p class="kicker">Reference · grids (2D arrays) in JavaScript</p>
+<h1>Grid cheat sheet</h1>
+<p class="subtitle">Everything you need to make, read and walk a grid. Grows with each lesson.</p>
+
+<h2>Make one</h2>
+<pre><code>const board = [
+  ["X", "O", "" ],   <span class="cmt">// row 0</span>
+  ["",  "X", "" ],   <span class="cmt">// row 1</span>
+  ["O", "",  "X"],   <span class="cmt">// row 2</span>
+];</code></pre>
+
+<h2>Read and write</h2>
+<div class="ref-scroll"><table class="ref">
+  <tr><th>Code</th><th>Gives you</th><th>Notes</th></tr>
+  <tr><td><code>board[r][c]</code></td><td>one cell</td><td><strong>Row first, then column</strong> ("down, then across"). Indexes start at 0.</td></tr>
+  <tr><td><code>board[r]</code></td><td>a whole row (an array)</td><td>A column has no array of its own, so you collect it with a loop.</td></tr>
+  <tr><td><code>board[r][c] = "X"</code></td><td>sets a cell</td><td>Works even with <code>const board</code>. <code>const</code> only stops you reassigning <code>board</code> itself.</td></tr>
+  <tr><td><code>board.length</code></td><td>number of rows</td><td></td></tr>
+  <tr><td><code>board[0].length</code></td><td>number of columns</td><td></td></tr>
+  <tr><td><code>board[3]</code> on a 3-row grid</td><td><code>undefined</code></td><td>So <code>board[3][0]</code> throws a TypeError. Last index = length − 1.</td></tr>
+</table></div>
+
+<h2>Walk it</h2>
+<h3>Every cell</h3>
+<pre><code>for (let row = 0; row &lt; board.length; row++) {
+  for (let col = 0; col &lt; board[row].length; col++) {
+    board[row][col]   <span class="cmt">// …do something</span>
+  }
+}</code></pre>
+
+<h3>One row: fix the row, move the column</h3>
+<pre><code>board[row][0], board[row][1], board[row][2]</code></pre>
+
+<h3>One column: fix the column, move the row</h3>
+<pre><code>board[0][col], board[1][col], board[2][col]</code></pre>
+
+<h3>A winning line</h3>
+<pre><code>const first = board[row][0];
+if (first === "") return false;          <span class="cmt">// an empty line isn't a win</span>
+return board[row][1] === first &amp;&amp; board[row][2] === first;</code></pre>
+
+<h2>JavaScript vs C#</h2>
+<div class="ref-scroll"><table class="ref">
+  <tr><th>JavaScript</th><th>C#</th><th>Note</th></tr>
+  <tr><td><code>const board = [[…], […]]</code></td><td><code>string[][] board = [[…], […]]</code></td><td>JS arrays of arrays = C# <em>jagged</em> arrays. JS has no <code>[,]</code>.</td></tr>
+  <tr><td><code>board[r][c]</code></td><td><code>board[r][c]</code> / <code>board[r, c]</code></td><td>The second C# form is only for rectangular arrays.</td></tr>
+  <tr><td><code>.length</code></td><td><code>.Length</code>, <code>GetLength(1)</code></td><td>Lowercase in JS. For columns, ask a row: <code>board[0].length</code>.</td></tr>
+  <tr><td><code>let i = 0</code></td><td><code>int i = 0</code></td><td>No types. Use <code>let</code> if it changes, <code>const</code> if it doesn't.</td></tr>
+  <tr><td><code>a === b</code></td><td><code>a == b</code></td><td>Always use <code>===</code>. JS <code>==</code> converts types first.</td></tr>
+  <tr><td><code>console.log(x)</code></td><td><code>Console.WriteLine(x)</code></td><td></td></tr>
+</table></div>
+
+<h2>Sources</h2>
+<p><a href="https://javascript.info/array#multidimensional-arrays">javascript.info: Arrays</a> ·
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#creating_a_two-dimensional_array">MDN: two-dimensional array</a> ·
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality">MDN: strict equality</a> ·
+<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/arrays#jagged-arrays">Microsoft Learn: C# arrays</a></p>
+
+<nav class="course"><span>← <a href="../index.html">Course home</a></span><span>From lesson <a href="../lessons/0001-your-first-grid.html">1</a></span></nav>
+</main>
+</body>
+</html>
