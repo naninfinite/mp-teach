@@ -31,6 +31,13 @@
 - **Lesson learned:** when unsure what an expression gives you, `console.log` it on its own and look. `board[1]` is an array (a row), and any array has `.length`.
 - **In my words:**
 
+## Step 2d: rows vs columns are two different numbers
+
+- **Stuck on:** "board.length works for 3×3, but how do I step it up for a different board?"
+- **Cause:** `board.length` only answers "how many rows?". A 3×3 board hides this, because rows and columns are both 3.
+- **Lesson learned:** bookshelf picture. `board` is the bookcase and each row is a shelf. `board.length` is the number of shelves. To count the books on a shelf, pick the shelf up first (`board[something]`), then ask its `.length`.
+- **In my words:**
+
 ## Step 3: read each cell
 
 _(not reached yet)_
