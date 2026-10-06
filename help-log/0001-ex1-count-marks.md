@@ -1,0 +1,26 @@
+# Lesson 1 · Exercise 1 · `countMarks(board, mark)`
+
+[Lesson](../lessons/0001-your-first-grid.html) · [Grid cheat sheet](../reference/grids.html)
+
+## Step 1: loop over the rows
+
+- **Stuck on:** `SyntaxError: Unexpected token ')'`
+- **Cause:** the `for` loop's `{` had no matching `}`. Three opening braces, two closing ones.
+- **Lesson learned:** when an error points somewhere strange, check that brackets pair up first. Where you put the `}` decides whether code runs *inside* the loop or *after* it.
+- **In my words:**
+
+## Step 2: add the inner loop for columns
+
+- **Stuck on:** inner loop was `col < board.length`
+- **Cause:** `board.length` is the number of **rows**. On a square 3×3 board the wrong number happens to be right, so the bug hides. On a 2×4 grid it stops at column 1 and skips columns 2 and 3.
+- **Lesson learned:** the number of columns comes from a **row**, not the board. Square test data can hide row/column mix-ups.
+- **JS vs C#:** reading past the end of an array in JS gives `undefined`, with no crash. C# would throw `IndexOutOfRangeException`.
+- **In my words:**
+
+## Step 3: read each cell
+
+_(not reached yet)_
+
+## Step 4: count the matches
+
+_(not reached yet)_
