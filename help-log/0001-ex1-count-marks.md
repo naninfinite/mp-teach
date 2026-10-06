@@ -17,6 +17,13 @@
 - **JS vs C#:** reading past the end of an array in JS gives `undefined`, with no crash. C# would throw `IndexOutOfRangeException`.
 - **In my words:**
 
+## Step 2b: asking a row for its length
+
+- **Stuck on:** inner loop was `col < board.length[0]`, and the inner loop never ran
+- **Cause:** JS reads left to right. `board.length` is the number `3`, and `3[0]` is `undefined`. `col < undefined` is always `false`, so the loop is skipped with no error.
+- **Lesson learned:** each `[ ]` or `.` works on the result of the step before it. To get a row's length, pick the row first, then ask for `.length`.
+- **In my words:**
+
 ## Step 3: read each cell
 
 _(not reached yet)_

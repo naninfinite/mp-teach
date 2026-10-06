@@ -5,6 +5,7 @@
 - Exercises run in-browser with instant automatic feedback (assets/code-exercise.js).
 - Planned arc: tic-tac-toe → Connect Four → Minesweeper → Game of Life → Snake → maze gen/solve → images → rotation matrices.
 - Machine: Raspberry Pi. Open lessons with `brave-browser <file>`, not xdg-open (HTML files are associated with a ChatGPT app).
+- When the learner asks for help, log it as a numbered step in `help-log/<lesson>-<exercise>.md` (stuck on / cause / lesson learned / blank "In my words"). Give hints, not answers, unless they ask. Open the next lesson by recalling these bugs.
 - Glossary: not created yet — add terms only once the learner can use them correctly.
 
 ## Later (after this course)
