@@ -24,6 +24,13 @@
 - **Lesson learned:** each `[ ]` or `.` works on the result of the step before it. To get a row's length, pick the row first, then ask for `.length`.
 - **In my words:**
 
+## Step 2c: swapping the loops didn't help
+
+- **Stuck on:** moved `board.length[0]` to the outer loop and `board.length` to the inner one. Now nothing printed at all.
+- **Cause:** the problem was the expression `board.length[0]` itself (it's `undefined`), not which loop it was in. The outer loop's `row < board.length` had been right all along.
+- **Lesson learned:** when unsure what an expression gives you, `console.log` it on its own and look. `board[1]` is an array (a row), and any array has `.length`.
+- **In my words:**
+
 ## Step 3: read each cell
 
 _(not reached yet)_
